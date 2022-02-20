@@ -1,6 +1,11 @@
 class Point:
-    """
-    This class keeps track for where the paddle and ball are on screen.
+    """Point
+
+    This class is used to help keep track of where all objects are in the game.
+
+    Attributes:
+        _x (int): x axis point
+        _y (int): y axis point
     """
 
     def __init__(self):
@@ -9,8 +14,14 @@ class Point:
 
 
 class Velocity:
-    """
-    This class sets how fast the ball is moving on screen.
+    """Velocity
+
+    This keeps track of how fast moving objects are going
+
+    Attributes:
+        dx (int): how fast an object moves on the x axis point
+        dy (int): how fast an ojbect moves on the y axis point
+
     """
 
     def __init__(self):

@@ -3,9 +3,17 @@ import game.shared.point as p
 
 
 class Object:
+    """Object
 
-    """
-    This is the standard for all objects in the game.
+    This is the baseline for all objects in the game
+
+    Attributes:
+        center (class): x axis point
+        velocity (class): y axis point
+        alive (bolean): true or false, helps remove objects during collision
+        texture (string): image generated for objects
+        scale (int): scale of the image from it's original file
+        radius (int): radius around the object
     """
 
     def __init__(self, img):

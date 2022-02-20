@@ -34,17 +34,23 @@ ROCK_IMG = "greed/game/images/rock.png"
 
 
 class GameDirector(arcade.View):
-    """
-    This class is the main body of the game, it handles:
-    object creation, movement and deletion
-    user key input
+    """Game director
+
+    This is the main game screen, it keeps track of:
+    -Player keyboard input
+    -Score
+    -Removing and creating objects
+
+    Attributes:
+        bag (class): player object
+        flying_actors (list): all the rocks and jewels are put into this list
+        score (int): the players score
     """
 
     def __init__(self):
         """
         Sets up the initial conditions of the game
-        :param width: Screen width
-        :param height: Screen height
+
         """
         super().__init__()
 
@@ -58,13 +64,13 @@ class GameDirector(arcade.View):
         self.holding_right = False
 
     def on_show(self):
-        """This is run once when we switch to this view"""
-        # arcade.set_background_color(arcade.csscolor.DARK_SLATE_BLUE)
+        """
+        Used to set the initial screen
+
+        """
+
         arcade.set_background_color(arcade.color.WHITE)
-        # Reset the viewport, necessary if we have a scrolling game and we need
-        # to reset the viewport back to the start so we can see what we draw.
         arcade.set_viewport(0, self.window.width, 0, self.window.height)
-        arcade.set_background_color(arcade.color.WHITE)
 
     def on_draw(self):
         """
@@ -103,12 +109,6 @@ class GameDirector(arcade.View):
         Update each object in the game.
         :param delta_time: tells us how much time has actually elapsed
         """
-
-        # Move the ball forward one element in time
-        # self.ball.advance()
-
-        # Check to see if keys are being held, and then
-        # take appropriate action
         self.check_keys()
         self.check_off_screen()
         self.check_collisions()
@@ -170,8 +170,8 @@ class GameDirector(arcade.View):
 
     def check_off_screen(self):
         """
-        Checks to see if bullets or targets have left the screen
-        and if so, removes them from their lists. Added Super bullets
+        Checks to see if objects have left the screen
+        and if so, removes them from their lists.
         :return:
         """
         for item in self.flying_actors:
@@ -180,7 +180,7 @@ class GameDirector(arcade.View):
 
     def cleanup_zombies(self):
         """
-        Removes any dead bullets or targets from the list. Added Super Bullets
+        Removes objects that collide with the bag
         :return:
         """
         for item in self.flying_actors:

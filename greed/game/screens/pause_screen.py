@@ -2,6 +2,16 @@ import arcade
 
 
 class PauseView(arcade.View):
+    """Pause screen
+
+    This screen appears if the player hits the ESC key
+
+    Attributes:
+        game_view (?): Captures the game screen information until the player resumes the game.
+        width (int): Screen width
+        height (int): screen height
+    """
+
     def __init__(self, game_view, width, height):
         super().__init__()
         self.game_view = game_view
@@ -12,22 +22,13 @@ class PauseView(arcade.View):
         arcade.set_background_color(arcade.color.ORANGE)
 
     def on_draw(self):
+        """draws images on the pause screen
+
+        Args:
+            clears the screen for new screen
+            inputs a message on the screen for the user
+        """
         self.clear()
-
-        # Draw player, for effect, on pause screen.
-        # The previous View (GameView) was passed in
-        # and saved in self.game_view.
-        # player_sprite = self.game_view.player_sprite
-        # player_sprite.draw()
-
-        # draw an orange filter over him
-        # arcade.draw_lrtb_rectangle_filled(
-        #     left=player_sprite.left,
-        #     right=player_sprite.right,
-        #     top=player_sprite.top,
-        #     bottom=player_sprite.bottom,
-        #     color=arcade.color.ORANGE + (200,),
-        # )
 
         arcade.draw_text(
             "PAUSED",
@@ -38,7 +39,6 @@ class PauseView(arcade.View):
             anchor_x="center",
         )
 
-        # Show tip to return or reset
         arcade.draw_text(
             "Press Esc. to return",
             self.width / 2,
@@ -57,7 +57,13 @@ class PauseView(arcade.View):
         )
 
     def on_key_press(self, key, _modifiers):
-        if key == arcade.key.ESCAPE:  # resume game
+        """Checks user key press
+
+        Args:
+            If user hits the ESC key they return to the game
+            If user hits the ENTER key they exit the game
+        """
+        if key == arcade.key.ESCAPE:
             self.window.show_view(self.game_view)
-        elif key == arcade.key.ENTER:  # reset game
+        elif key == arcade.key.ENTER:
             arcade.close_window()

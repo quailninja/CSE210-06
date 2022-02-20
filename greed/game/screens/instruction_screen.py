@@ -8,18 +8,29 @@ DEFAULT_FONT_SIZE = 20
 
 
 class InstructionView(arcade.View):
-    """View to show instructions"""
+    """Instruction Screen
+
+    This is the first screen shown to players when the game starts.
+
+    Attributes:
+        none
+    """
 
     def on_show(self):
-        """This is run once when we switch to this view"""
-        arcade.set_background_color(arcade.csscolor.DARK_SLATE_BLUE)
+        """Updates the background and resets user view
 
-        # Reset the viewport, necessary if we have a scrolling game and we need
-        # to reset the viewport back to the start so we can see what we draw.
+        Args:
+            changes back ground color and also the viewport the view port change doesn't seem necessary
+        """
+        arcade.set_background_color(arcade.csscolor.DARK_SLATE_BLUE)
         arcade.set_viewport(0, self.window.width, 0, self.window.height)
 
     def on_draw(self):
-        """Draw this view"""
+        """Draws users view
+
+        Args:
+            Instructions given to user on screen using arcades draw_text function
+        """
         self.clear()
         start_y = self.window.height - 100
         start_x = self.window.width / 2
@@ -83,6 +94,11 @@ class InstructionView(arcade.View):
         )
 
     def on_mouse_press(self, _x, _y, _button, _modifiers):
-        """If the user presses the mouse button, start the game."""
+        """Waits to detect mouse click from user
+
+        Args:
+            uses arcades on_mouse_press to detect mouse click
+            then it changes the screen
+        """
         game = GameDirector()
         self.window.show_view(game)

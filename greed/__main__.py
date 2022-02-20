@@ -9,11 +9,10 @@ donkey = True
 
 
 def main():
-    """Main function
-    This starts the arcade window that is run by the Video
+    """Main Function
+
+    This starts the arcade window and gives the instruction view
     """
-    # VideoService(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
-    # arcade.run()
     window = arcade.Window(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
     start_view = InstructionView()
     window.show_view(start_view)
