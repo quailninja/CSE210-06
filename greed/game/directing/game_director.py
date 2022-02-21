@@ -5,6 +5,7 @@ from game.objects.rock import Rock
 from game.objects.jewel import Jewel
 from game.screens.pause_screen import PauseView
 
+
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
 
@@ -47,16 +48,16 @@ class GameDirector(arcade.View):
         score (int): the players score
     """
 
-    def __init__(self):
+    def __init__(self, i_view):
         """
         Sets up the initial conditions of the game
 
         """
         super().__init__()
-
         self.bag = Bag(BAG_IMG, SCREEN_WIDTH, BAG_RADIUS, BAG_SCALE)
         self.flying_actors = []
         self.score = 0
+        self._i_view = i_view
 
         # These are used to see if the user is
         # holding down the arrow keys
@@ -166,8 +167,6 @@ class GameDirector(arcade.View):
 
         self.flying_actors.append(item)
 
-        item.draw()
-
     def check_off_screen(self):
         """
         Checks to see if objects have left the screen
@@ -213,7 +212,7 @@ class GameDirector(arcade.View):
 
         if key == arcade.key.ESCAPE:
             # pass self, the current view, to preserve this view's state
-            pause = PauseView(self, SCREEN_WIDTH, SCREEN_HEIGHT)
+            pause = PauseView(self, SCREEN_WIDTH, SCREEN_HEIGHT, self._i_view)
             self.window.show_view(pause)
 
     def on_key_release(self, key, key_modifiers):

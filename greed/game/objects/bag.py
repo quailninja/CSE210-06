@@ -14,11 +14,6 @@ class Bag(Object):
     """
 
     def __init__(self, img, width, radius, scale):
-        """Updates the message to the given one.
-
-        Args:
-            message (string): The given message.
-        """
         super().__init__(img)
         self._center._x = width / 2
         self._center._y = radius * 2
@@ -29,7 +24,7 @@ class Bag(Object):
         """Moves bag right
 
         Args:
-
+            updates the bags x point to move it
         """
         if self._center._x < width - self._radius * 2:
             self._center._x += move
@@ -38,7 +33,7 @@ class Bag(Object):
         """Moves bag left
 
         Args:
-
+            updates the bags x point to move it
         """
         if self._center._x > self._radius * 2:
             self._center._x -= move

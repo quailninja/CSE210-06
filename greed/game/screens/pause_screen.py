@@ -12,11 +12,12 @@ class PauseView(arcade.View):
         height (int): screen height
     """
 
-    def __init__(self, game_view, width, height):
+    def __init__(self, game_view, width, height, i_view):
         super().__init__()
         self.game_view = game_view
         self.width = width
         self.height = height
+        self._i_view = i_view
 
     def on_show(self):
         arcade.set_background_color(arcade.color.ORANGE)
@@ -48,9 +49,17 @@ class PauseView(arcade.View):
             anchor_x="center",
         )
         arcade.draw_text(
-            "Press Enter to quit",
+            "Press Q to quit",
             self.width / 2,
             self.height / 2 - 30,
+            arcade.color.BLACK,
+            font_size=20,
+            anchor_x="center",
+        )
+        arcade.draw_text(
+            "Enter to restart",
+            self.width / 2,
+            self.height / 2 - 60,
             arcade.color.BLACK,
             font_size=20,
             anchor_x="center",
@@ -65,5 +74,7 @@ class PauseView(arcade.View):
         """
         if key == arcade.key.ESCAPE:
             self.window.show_view(self.game_view)
-        elif key == arcade.key.ENTER:
+        elif key == arcade.key.Q:
             arcade.close_window()
+        elif key == arcade.key.ENTER:
+            self.window.show_view(self._i_view)

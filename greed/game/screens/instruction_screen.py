@@ -45,7 +45,7 @@ class InstructionView(arcade.View):
 
         start_y -= TITLE_LINE_HEIGHT
         arcade.draw_text(
-            "Use the arrow keys to move the bag",
+            "Use the arrow keys to move the bag. ESCAPE key to pause.",
             start_x,
             start_y,
             arcade.color.WHITE,
@@ -100,5 +100,5 @@ class InstructionView(arcade.View):
             uses arcades on_mouse_press to detect mouse click
             then it changes the screen
         """
-        game = GameDirector()
+        game = GameDirector(self)
         self.window.show_view(game)
