@@ -1,9 +1,12 @@
+from tarfile import NUL
 import arcade
 import random as r
+
 from game.objects.bag import Bag
 from game.objects.rock import Rock
 from game.objects.jewel import Jewel
 from game.screens.pause_screen import PauseView
+from game.services.keyboard_service import KeyboardService
 
 
 SCREEN_WIDTH = 800
@@ -32,6 +35,7 @@ JEWEL_LIST = [
 ]
 BAG_IMG = "greed/game/images/bag.png"
 ROCK_IMG = "greed/game/images/rock.png"
+BACKGROUND_IMG = "greed/game/images/mountain_back.png"
 
 
 class GameDirector(arcade.View):
@@ -58,11 +62,9 @@ class GameDirector(arcade.View):
         self.flying_actors = []
         self.score = 0
         self._i_view = i_view
-
-        # These are used to see if the user is
-        # holding down the arrow keys
-        self.holding_left = False
-        self.holding_right = False
+        self._key = NUL
+        self._keyboard_services = KeyboardService(self.bag, MOVE_AMOUNT, SCREEN_WIDTH)
+        self._background = arcade.load_texture(BACKGROUND_IMG)
 
     def on_show(self):
         """
@@ -81,7 +83,9 @@ class GameDirector(arcade.View):
 
         # clear the screen to begin drawing
         self.clear()
-
+        arcade.draw_lrwh_rectangle_textured(
+            0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, self._background
+        )
         # draw each object
         self.bag.draw()
 
@@ -110,10 +114,12 @@ class GameDirector(arcade.View):
         Update each object in the game.
         :param delta_time: tells us how much time has actually elapsed
         """
-        self.check_keys()
+        pause = PauseView(self, SCREEN_WIDTH, SCREEN_HEIGHT, self._i_view)
+        self._keyboard_services.check_keys(self._key, pause)
         self.check_off_screen()
         self.check_collisions()
-
+        if self._key == 65307:
+            self._key = NUL
         if r.randint(1, 25) == 1:
             self.create_object()
 
@@ -186,44 +192,8 @@ class GameDirector(arcade.View):
             if not item.alive:
                 self.flying_actors.remove(item)
 
-    def check_keys(self):
-        """
-        Checks to see if the user is holding down an
-        arrow key, and if so, takes appropriate action.
-        """
-        if self.holding_left:
-            self.bag.move_left(MOVE_AMOUNT)
-
-        if self.holding_right:
-            self.bag.move_right(SCREEN_WIDTH, MOVE_AMOUNT)
-
     def on_key_press(self, key, key_modifiers):
-        """
-        Called when a key is pressed. Sets the state of
-        holding an arrow key.
-        :param key: The key that was pressed
-        :param key_modifiers: Things like shift, ctrl, etc
-        """
-        if key == arcade.key.LEFT or key == arcade.key.DOWN:
-            self.holding_left = True
-
-        if key == arcade.key.RIGHT or key == arcade.key.UP:
-            self.holding_right = True
-
-        if key == arcade.key.ESCAPE:
-            # pass self, the current view, to preserve this view's state
-            pause = PauseView(self, SCREEN_WIDTH, SCREEN_HEIGHT, self._i_view)
-            self.window.show_view(pause)
+        self._key = key
 
     def on_key_release(self, key, key_modifiers):
-        """
-        Called when a key is released. Sets the state of
-        the arrow key as being not held anymore.
-        :param key: The key that was pressed
-        :param key_modifiers: Things like shift, ctrl, etc
-        """
-        if key == arcade.key.LEFT or key == arcade.key.DOWN:
-            self.holding_left = False
-
-        if key == arcade.key.RIGHT or key == arcade.key.UP:
-            self.holding_right = False
+        self._key = NUL
