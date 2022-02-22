@@ -1,4 +1,5 @@
 import arcade
+from game.services.keyboard_service import KeyboardService
 
 
 class PauseView(arcade.View):
@@ -14,8 +15,9 @@ class PauseView(arcade.View):
 
     def __init__(self, game_view, i_view):
         super().__init__()
-        self.game_view = game_view
+        self._game_view = game_view
         self._i_view = i_view
+        self._keyboard_services = KeyboardService(0, 0)
 
     def on_show(self):
         arcade.set_background_color(arcade.color.ORANGE)
@@ -67,15 +69,6 @@ class PauseView(arcade.View):
         """Checks user key press
 
         Args:
-            If user hits the ESC key they return to the game
-            If user hits the ENTER key they exit the game
+            runs keyboard_services check keys class
         """
-        if key == arcade.key.ESCAPE:
-            self.window.show_view(self.game_view)
-        elif key == arcade.key.Q:
-            arcade.close_window()
-        elif key == arcade.key.ENTER:
-            self.window.show_view(self._i_view)
-
-    # def on_key_press(self, key, key_modifiers):
-    #     self._key = key
+        self._keyboard_services.check_keys(key, self._game_view, self._i_view)

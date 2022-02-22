@@ -1,3 +1,4 @@
+from asyncio.windows_events import NULL
 from tarfile import NUL
 import arcade
 import random as r
@@ -59,9 +60,7 @@ class GameDirector(arcade.View):
         self.score = 0
         self._i_view = i_view
         self._key = NUL
-        self._keyboard_services = KeyboardService(
-            self.bag, MOVE_AMOUNT, self.window.width
-        )
+        self._keyboard_services = KeyboardService(self.bag, MOVE_AMOUNT)
         self._background = arcade.load_texture(BACKGROUND_IMG)
 
     def on_show(self):
@@ -112,8 +111,8 @@ class GameDirector(arcade.View):
         Update each object in the game.
         :param delta_time: tells us how much time has actually elapsed
         """
-        pause = PauseView(self, self.window.width, self.window.height, self._i_view)
-        self._keyboard_services.check_keys(self._key, pause)
+        pause = PauseView(self, self._i_view)
+        self._keyboard_services.check_keys(self._key, pause, 0)
         self.check_off_screen()
         self.check_collisions()
         if self._key == 65307:

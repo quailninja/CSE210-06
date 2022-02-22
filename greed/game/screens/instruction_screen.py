@@ -1,6 +1,6 @@
 import arcade
 from game.directing.game_director import GameDirector
-from game.services.keyboard_service import KeyboardService
+
 
 TITLE_LINE_HEIGHT = 75
 DEFAULT_LINE_HEIGHT = 45
@@ -19,7 +19,6 @@ class InstructionView(arcade.View):
 
     def __init__(self):
         super().__init__()
-        self._keyboard_services = KeyboardService(0, 0, self.window.width)
 
     def on_show(self):
         """Updates the background and resets user view
