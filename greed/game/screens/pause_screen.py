@@ -12,11 +12,9 @@ class PauseView(arcade.View):
         height (int): screen height
     """
 
-    def __init__(self, game_view, width, height, i_view):
+    def __init__(self, game_view, i_view):
         super().__init__()
         self.game_view = game_view
-        self.width = width
-        self.height = height
         self._i_view = i_view
 
     def on_show(self):
@@ -33,8 +31,8 @@ class PauseView(arcade.View):
 
         arcade.draw_text(
             "PAUSED",
-            self.width / 2,
-            self.height / 2 + 50,
+            self.window.width / 2,
+            self.window.height / 2 + 50,
             arcade.color.BLACK,
             font_size=50,
             anchor_x="center",
@@ -42,24 +40,24 @@ class PauseView(arcade.View):
 
         arcade.draw_text(
             "Press Esc. to return",
-            self.width / 2,
-            self.height / 2,
+            self.window.width / 2,
+            self.window.height / 2,
             arcade.color.BLACK,
             font_size=20,
             anchor_x="center",
         )
         arcade.draw_text(
             "Press Q to quit",
-            self.width / 2,
-            self.height / 2 - 30,
+            self.window.width / 2,
+            self.window.height / 2 - 30,
             arcade.color.BLACK,
             font_size=20,
             anchor_x="center",
         )
         arcade.draw_text(
             "Enter to restart",
-            self.width / 2,
-            self.height / 2 - 60,
+            self.window.width / 2,
+            self.window.height / 2 - 60,
             arcade.color.BLACK,
             font_size=20,
             anchor_x="center",
@@ -78,3 +76,6 @@ class PauseView(arcade.View):
             arcade.close_window()
         elif key == arcade.key.ENTER:
             self.window.show_view(self._i_view)
+
+    # def on_key_press(self, key, key_modifiers):
+    #     self._key = key

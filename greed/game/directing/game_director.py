@@ -8,10 +8,6 @@ from game.objects.jewel import Jewel
 from game.screens.pause_screen import PauseView
 from game.services.keyboard_service import KeyboardService
 
-
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 600
-
 BAG_RADIUS = 12.5
 BAG_SCALE = 0.05
 
@@ -58,12 +54,14 @@ class GameDirector(arcade.View):
 
         """
         super().__init__()
-        self.bag = Bag(BAG_IMG, SCREEN_WIDTH, BAG_RADIUS, BAG_SCALE)
+        self.bag = Bag(BAG_IMG, self.window.width, BAG_RADIUS, BAG_SCALE)
         self.flying_actors = []
         self.score = 0
         self._i_view = i_view
         self._key = NUL
-        self._keyboard_services = KeyboardService(self.bag, MOVE_AMOUNT, SCREEN_WIDTH)
+        self._keyboard_services = KeyboardService(
+            self.bag, MOVE_AMOUNT, self.window.width
+        )
         self._background = arcade.load_texture(BACKGROUND_IMG)
 
     def on_show(self):
@@ -84,7 +82,7 @@ class GameDirector(arcade.View):
         # clear the screen to begin drawing
         self.clear()
         arcade.draw_lrwh_rectangle_textured(
-            0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, self._background
+            0, 0, self.window.width, self.window.height, self._background
         )
         # draw each object
         self.bag.draw()
@@ -100,7 +98,7 @@ class GameDirector(arcade.View):
         """
         score_text = "Score: {}".format(self.score)
         start_x = 10
-        start_y = SCREEN_HEIGHT - 20
+        start_y = self.window.height - 20
         arcade.draw_text(
             score_text,
             start_x=start_x,
@@ -114,7 +112,7 @@ class GameDirector(arcade.View):
         Update each object in the game.
         :param delta_time: tells us how much time has actually elapsed
         """
-        pause = PauseView(self, SCREEN_WIDTH, SCREEN_HEIGHT, self._i_view)
+        pause = PauseView(self, self.window.width, self.window.height, self._i_view)
         self._keyboard_services.check_keys(self._key, pause)
         self.check_off_screen()
         self.check_collisions()
@@ -155,8 +153,8 @@ class GameDirector(arcade.View):
                 ROCK_IMG,
                 ROCK_SCALE,
                 ROCK_RADIUS,
-                SCREEN_WIDTH,
-                SCREEN_HEIGHT,
+                self.window.width,
+                self.window.height,
                 MAX_SPEED,
                 LOW_SPEED,
             )
@@ -165,8 +163,8 @@ class GameDirector(arcade.View):
                 JEWEL_LIST,
                 JEWEL_RADIUS,
                 JEWEL_SCALE,
-                SCREEN_HEIGHT,
-                SCREEN_WIDTH,
+                self.window.height,
+                self.window.width,
                 LOW_SPEED,
                 MAX_SPEED,
             )
@@ -180,7 +178,7 @@ class GameDirector(arcade.View):
         :return:
         """
         for item in self.flying_actors:
-            if item.is_off_screen(SCREEN_WIDTH, SCREEN_HEIGHT):
+            if item.is_off_screen(self.window.width, self.window.height):
                 self.flying_actors.remove(item)
 
     def cleanup_zombies(self):
