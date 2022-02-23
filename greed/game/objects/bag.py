@@ -14,7 +14,7 @@ class Bag(Object):
     """
 
     def __init__(self, img, width, radius, scale):
-        super().__init__(img)
+        super().__init__(img, 0)
         self._center._x = width / 2
         self._center._y = radius * 2
         self._scale = scale
