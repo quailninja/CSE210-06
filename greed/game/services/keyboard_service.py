@@ -16,7 +16,7 @@ class KeyboardService(arcade.View):
         self._item_move = item_move
         self._move_speed = move_speed
 
-    def check_keys(self, key, view1, view2):
+    def check_keys(self, key, view1, view2=0):
         """
         Checks if a certain key is being pressed
         """

@@ -23,6 +23,7 @@ class Object:
         self._texture = arcade.load_texture(img)
         self._radius = 5
         self._scale = 1
+        self._hit = 0
 
     def advance(self):
         """
@@ -38,6 +39,9 @@ class Object:
         arcade.draw_scaled_texture_rectangle(
             self._center._x, self._center._y, self._texture, self._scale
         )
+
+    def hit(self):
+        return self._hit
 
     def is_off_screen(self, SCREEN_WIDTH, SCREEN_HEIGHT):
         """

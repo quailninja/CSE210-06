@@ -15,18 +15,15 @@ class Jewel(Object):
         velocity (int): how fast the object will move
     """
 
-    def __init__(self, j_list, radius, scale, height, width, low, max):
-        super().__init__(r.choice(j_list))
+    def __init__(self, img, radius, scale, height, width, low, max, score):
+        super().__init__(img)
         self._radius = radius
         self._center._x = r.randint(self._radius * 2, width - self._radius * 2)
         self._center._y = height - self._radius * 2
         self._scale = scale
-        self._velocity._dy = r.randint(max, low)
-
-    def hit(self):
-        """Used to give points to the user
-
-        Returns:
-           Point value
-        """
-        return 2
+        if "red" in img:
+            self._hit = score + 5
+            self._velocity._dy = r.randint(max - 2, low - 5)
+        else:
+            self._hit = score
+            self._velocity._dy = r.randint(max, low)

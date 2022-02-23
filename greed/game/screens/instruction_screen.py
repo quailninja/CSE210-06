@@ -49,7 +49,17 @@ class InstructionView(arcade.View):
 
         start_y -= TITLE_LINE_HEIGHT
         arcade.draw_text(
-            "Use the arrow keys to move the bag. ESCAPE key to pause.",
+            "Use the arrow keys to move the bag.",
+            start_x,
+            start_y,
+            arcade.color.WHITE,
+            font_size=DEFAULT_FONT_SIZE,
+            anchor_x="center",
+        )
+
+        start_y -= DEFAULT_LINE_HEIGHT
+        arcade.draw_text(
+            "ESCAPE key to pause.",
             start_x,
             start_y,
             arcade.color.WHITE,
@@ -67,25 +77,25 @@ class InstructionView(arcade.View):
             anchor_x="center",
         )
 
-        start_y -= DEFAULT_LINE_HEIGHT
-        arcade.draw_text(
-            "You win if you can get 600 points.",
-            start_x,
-            start_y,
-            arcade.color.WHITE,
-            font_size=DEFAULT_FONT_SIZE,
-            anchor_x="center",
-        )
+        # start_y -= DEFAULT_LINE_HEIGHT
+        # arcade.draw_text(
+        #     "You win if you can get 600 points.",
+        #     start_x,
+        #     start_y,
+        #     arcade.color.WHITE,
+        #     font_size=DEFAULT_FONT_SIZE,
+        #     anchor_x="center",
+        # )
 
-        start_y -= DEFAULT_LINE_HEIGHT
-        arcade.draw_text(
-            "You lose if you get -20 points",
-            start_x,
-            start_y,
-            arcade.color.WHITE,
-            font_size=DEFAULT_FONT_SIZE,
-            anchor_x="center",
-        )
+        # start_y -= DEFAULT_LINE_HEIGHT
+        # arcade.draw_text(
+        #     "You lose if you get -20 points",
+        #     start_x,
+        #     start_y,
+        #     arcade.color.WHITE,
+        #     font_size=DEFAULT_FONT_SIZE,
+        #     anchor_x="center",
+        # )
 
         start_y -= DEFAULT_LINE_HEIGHT
         arcade.draw_text(

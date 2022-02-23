@@ -1,35 +1,16 @@
 from asyncio.windows_events import NULL
-from tarfile import NUL
 import arcade
 import random as r
 
 from game.objects.bag import Bag
-from game.objects.rock import Rock
-from game.objects.jewel import Jewel
+from game.services.object_creator import ObjectCreator
 from game.screens.pause_screen import PauseView
 from game.services.keyboard_service import KeyboardService
 
 BAG_RADIUS = 12.5
 BAG_SCALE = 0.05
-
-JEWEL_RADIUS = 15
-JEWEL_SCALE = 0.5
-
-ROCK_RADIUS = 16
-ROCK_SCALE = 0.6
-
 MOVE_AMOUNT = 5
-LOW_SPEED = -2
-MAX_SPEED = -7
 
-SCORE_JEWEL = 2
-SCORE_ROCK = 10
-
-JEWEL_LIST = [
-    "greed/game/images/red.png",
-    "greed/game/images/blue.png",
-    "greed/game/images/yellow.png",
-]
 BAG_IMG = "greed/game/images/bag.png"
 ROCK_IMG = "greed/game/images/rock.png"
 BACKGROUND_IMG = "greed/game/images/mountain_back.png"
@@ -59,9 +40,13 @@ class GameDirector(arcade.View):
         self.flying_actors = []
         self.score = 0
         self._i_view = i_view
-        self._key = NUL
+        self._key = NULL
         self._keyboard_services = KeyboardService(self.bag, MOVE_AMOUNT)
         self._background = arcade.load_texture(BACKGROUND_IMG)
+        self._object_creator = ObjectCreator(
+            self.window.width,
+            self.window.height,
+        )
 
     def on_show(self):
         """
@@ -78,15 +63,13 @@ class GameDirector(arcade.View):
         Handles the responsiblity of drawing all elements.
         """
 
-        # clear the screen to begin drawing
         self.clear()
         arcade.draw_lrwh_rectangle_textured(
             0, 0, self.window.width, self.window.height, self._background
         )
-        # draw each object
         self.bag.draw()
 
-        for item in self.flying_actors:
+        for item in self._object_creator._the_objects:
             item.draw()
 
         self.draw_score()
@@ -113,14 +96,14 @@ class GameDirector(arcade.View):
         """
         pause = PauseView(self, self._i_view)
         self._keyboard_services.check_keys(self._key, pause, 0)
-        self.check_off_screen()
+        self._object_creator.check_off_screen()
         self.check_collisions()
-        if self._key == 65307:
-            self._key = NUL
+        if self._key == arcade.key.ESCAPE:
+            self._key = NULL
         if r.randint(1, 25) == 1:
-            self.create_object()
+            self._object_creator.create_object()
 
-        for item in self.flying_actors:
+        for item in self._object_creator._the_objects:
             item.advance()
 
     def check_collisions(self):
@@ -129,7 +112,7 @@ class GameDirector(arcade.View):
         Updates scores and removes dead items.
         :return:
         """
-        for item in self.flying_actors:
+        for item in self._object_creator._the_objects:
 
             too_close = item._radius + self.bag._radius
 
@@ -140,57 +123,10 @@ class GameDirector(arcade.View):
                 item.alive = False
                 self.score += item.hit()
 
-        self.cleanup_zombies()
-
-    def create_object(self):
-        """
-        Creates a new actor of a random type and adds it to the list.
-        :return:
-        """
-        if r.randint(1, 3) == 1:
-            item = Rock(
-                ROCK_IMG,
-                ROCK_SCALE,
-                ROCK_RADIUS,
-                self.window.width,
-                self.window.height,
-                MAX_SPEED,
-                LOW_SPEED,
-            )
-        else:
-            item = Jewel(
-                JEWEL_LIST,
-                JEWEL_RADIUS,
-                JEWEL_SCALE,
-                self.window.height,
-                self.window.width,
-                LOW_SPEED,
-                MAX_SPEED,
-            )
-
-        self.flying_actors.append(item)
-
-    def check_off_screen(self):
-        """
-        Checks to see if objects have left the screen
-        and if so, removes them from their lists.
-        :return:
-        """
-        for item in self.flying_actors:
-            if item.is_off_screen(self.window.width, self.window.height):
-                self.flying_actors.remove(item)
-
-    def cleanup_zombies(self):
-        """
-        Removes objects that collide with the bag
-        :return:
-        """
-        for item in self.flying_actors:
-            if not item.alive:
-                self.flying_actors.remove(item)
+        self._object_creator.cleanup_zombies()
 
     def on_key_press(self, key, key_modifiers):
         self._key = key
 
     def on_key_release(self, key, key_modifiers):
-        self._key = NUL
+        self._key = NULL

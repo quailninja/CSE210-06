@@ -15,18 +15,11 @@ class Rock(Object):
         velocity (int): how fast the object will move
     """
 
-    def __init__(self, img, scale, radius, width, height, max, low):
+    def __init__(self, img, scale, radius, width, height, max, low, hit):
         super().__init__(img)
         self._radius = radius
         self._scale = scale
         self._center._x = r.randint(self._radius * 2, width - self._radius * 2)
         self._center._y = height - self._radius * 2
         self._velocity._dy = r.randint(max, low)
-
-    def hit(self):
-        """Used to subtrace points from the user
-
-        Returns:
-           Point value
-        """
-        return -10
+        self._hit = hit
