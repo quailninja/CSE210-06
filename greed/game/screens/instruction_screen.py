@@ -2,9 +2,9 @@ import arcade
 from game.directing.game_director import GameDirector
 
 
-TITLE_LINE_HEIGHT = 75
-DEFAULT_LINE_HEIGHT = 45
-TITLE_FONT_SIZE = 50
+TITLE_LINE_HEIGHT = 70
+DEFAULT_LINE_HEIGHT = 50
+TITLE_FONT_SIZE = 60
 DEFAULT_FONT_SIZE = 20
 
 
@@ -35,6 +35,11 @@ class InstructionView(arcade.View):
         Args:
             Instructions given to user on screen using arcades draw_text function
         """
+        arrows = arcade.load_texture("greed/game/images/arrows.png")
+        red_gem = arcade.load_texture("greed/game/images/red.png")
+        blue_gem = arcade.load_texture("greed/game/images/blue.png")
+        yellow_gem = arcade.load_texture("greed/game/images/yellow.png")
+        rock = arcade.load_texture("greed/game/images/rock.png")
         self.clear()
         start_y = self.window.height - 100
         start_x = self.window.width / 2
@@ -56,10 +61,12 @@ class InstructionView(arcade.View):
             font_size=DEFAULT_FONT_SIZE,
             anchor_x="center",
         )
-
         start_y -= DEFAULT_LINE_HEIGHT
+        arcade.draw_scaled_texture_rectangle(start_x, start_y, arrows, 0.25)
+
+        start_y -= DEFAULT_LINE_HEIGHT + 10
         arcade.draw_text(
-            "ESCAPE key to pause.",
+            "ESC key to pause.",
             start_x,
             start_y,
             arcade.color.WHITE,
@@ -68,9 +75,31 @@ class InstructionView(arcade.View):
         )
 
         start_y -= DEFAULT_LINE_HEIGHT
+        arcade.draw_scaled_texture_rectangle(start_x - 60, start_y + 10, blue_gem, 1)
+        arcade.draw_scaled_texture_rectangle(start_x - 10, start_y + 10, yellow_gem, 1)
         arcade.draw_text(
-            "Gems are worth 2 points, rocks are -10 points",
-            start_x,
+            "= 2",
+            start_x + 30,
+            start_y,
+            arcade.color.WHITE,
+            font_size=DEFAULT_FONT_SIZE,
+            anchor_x="center",
+        )
+        start_y -= DEFAULT_LINE_HEIGHT
+        arcade.draw_scaled_texture_rectangle(start_x - 25, start_y + 10, red_gem, 1)
+        arcade.draw_text(
+            "= 7",
+            start_x + 30,
+            start_y,
+            arcade.color.WHITE,
+            font_size=DEFAULT_FONT_SIZE,
+            anchor_x="center",
+        )
+        start_y -= DEFAULT_LINE_HEIGHT
+        arcade.draw_scaled_texture_rectangle(start_x - 25, start_y + 10, rock, 1)
+        arcade.draw_text(
+            "= -10",
+            start_x + 40,
             start_y,
             arcade.color.WHITE,
             font_size=DEFAULT_FONT_SIZE,

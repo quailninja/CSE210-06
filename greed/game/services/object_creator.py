@@ -27,6 +27,15 @@ ROCK_IMG = "greed/game/images/rock.png"
 
 
 class ObjectCreator:
+    """
+    Creates most of the ojbects in the game, rocks and jewels.
+
+    Attributes:
+        _width (class): screen width
+        _height(int): screen height
+        _the_objects (list): list of objects
+    """
+
     def __init__(self, width, height):
         self._width = width
         self._height = height
@@ -73,9 +82,6 @@ class ObjectCreator:
             )
 
         self._the_objects.append(item)
-
-    def get_objects(self):
-        return self._the_objects
 
     def cleanup_zombies(self):
         """
