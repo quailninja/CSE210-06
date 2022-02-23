@@ -15,8 +15,8 @@ class Jewel(Object):
         velocity (int): how fast the object will move
     """
 
-    def __init__(self, img, radius, scale, height, width, low, max, score):
-        super().__init__(img)
+    def __init__(self, img, sound, radius, scale, height, width, low, max, score):
+        super().__init__(img, sound)
         self._radius = radius
         self._center._x = r.randint(self._radius * 2, width - self._radius * 2)
         self._center._y = height - self._radius * 2

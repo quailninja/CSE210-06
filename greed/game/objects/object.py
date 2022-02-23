@@ -16,11 +16,13 @@ class Object:
         radius (int): radius around the object
     """
 
-    def __init__(self, img):
+    def __init__(self, img, sound):
         self._center = p.Point()
         self._velocity = p.Velocity()
         self.alive = True
         self._texture = arcade.load_texture(img)
+        if sound != 0:
+            self._sound = arcade.load_sound(sound)
         self._radius = 5
         self._scale = 1
         self._hit = 0
@@ -39,6 +41,9 @@ class Object:
         arcade.draw_scaled_texture_rectangle(
             self._center._x, self._center._y, self._texture, self._scale
         )
+
+    def sound(self):
+        arcade.play_sound(self._sound)
 
     def hit(self):
         return self._hit

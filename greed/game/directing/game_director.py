@@ -121,6 +121,7 @@ class GameDirector(arcade.View):
                 and abs(item._center._y - self.bag._center._y) < too_close
             ):
                 item.alive = False
+                item.sound()
                 self.score += item.hit()
 
         self._object_creator.cleanup_zombies()

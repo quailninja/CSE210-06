@@ -7,9 +7,11 @@ BAG_SCALE = 0.05
 
 JEWEL_RADIUS = 15
 JEWEL_SCALE = 0.5
+JEWEL_SOUND = "greed/game/sounds/jewel.wav"
 
 ROCK_RADIUS = 16
 ROCK_SCALE = 0.6
+ROCK_SOUND = "greed/game/sounds/rock.wav"
 
 LOW_SPEED = -2
 MAX_SPEED = -7
@@ -50,6 +52,7 @@ class ObjectCreator:
         if number < 25:
             item = Rock(
                 ROCK_IMG,
+                ROCK_SOUND,
                 ROCK_SCALE,
                 ROCK_RADIUS,
                 self._width,
@@ -61,6 +64,7 @@ class ObjectCreator:
         elif 50 > number > 25:
             item = Jewel(
                 JEWEL_LIST[r.randint(0, 1)],
+                JEWEL_SOUND,
                 JEWEL_RADIUS,
                 JEWEL_SCALE,
                 self._height,
@@ -72,6 +76,7 @@ class ObjectCreator:
         else:
             item = Jewel(
                 JEWEL_LIST[2],
+                JEWEL_SOUND,
                 JEWEL_RADIUS,
                 JEWEL_SCALE,
                 self._height,
