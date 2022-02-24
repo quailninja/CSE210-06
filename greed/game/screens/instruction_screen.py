@@ -26,6 +26,7 @@ class InstructionView(arcade.View):
         Args:
             changes back ground color and also the viewport the view port change doesn't seem necessary
         """
+
         arcade.set_background_color(arcade.csscolor.DARK_SLATE_BLUE)
         arcade.set_viewport(0, self.window.width, 0, self.window.height)
 
@@ -35,6 +36,7 @@ class InstructionView(arcade.View):
         Args:
             Instructions given to user on screen using arcades draw_text function
         """
+        self.clear()
         arrows = arcade.load_texture("greed/game/images/arrows.png")
         red_gem = arcade.load_texture("greed/game/images/red.png")
         blue_gem = arcade.load_texture("greed/game/images/blue.png")
@@ -105,26 +107,6 @@ class InstructionView(arcade.View):
             font_size=DEFAULT_FONT_SIZE,
             anchor_x="center",
         )
-
-        # start_y -= DEFAULT_LINE_HEIGHT
-        # arcade.draw_text(
-        #     "You win if you can get 600 points.",
-        #     start_x,
-        #     start_y,
-        #     arcade.color.WHITE,
-        #     font_size=DEFAULT_FONT_SIZE,
-        #     anchor_x="center",
-        # )
-
-        # start_y -= DEFAULT_LINE_HEIGHT
-        # arcade.draw_text(
-        #     "You lose if you get -20 points",
-        #     start_x,
-        #     start_y,
-        #     arcade.color.WHITE,
-        #     font_size=DEFAULT_FONT_SIZE,
-        #     anchor_x="center",
-        # )
 
         start_y -= DEFAULT_LINE_HEIGHT
         arcade.draw_text(

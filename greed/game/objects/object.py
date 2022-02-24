@@ -43,9 +43,15 @@ class Object:
         )
 
     def sound(self):
+        """
+        All objects will use this to play sound
+        """
         arcade.play_sound(self._sound)
 
     def hit(self):
+        """
+        All objects will use this to determine point value
+        """
         return self._hit
 
     def is_off_screen(self, SCREEN_WIDTH, SCREEN_HEIGHT):

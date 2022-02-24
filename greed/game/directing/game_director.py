@@ -1,4 +1,3 @@
-from asyncio.windows_events import NULL
 import arcade
 import random as r
 
@@ -40,7 +39,7 @@ class GameDirector(arcade.View):
         self.flying_actors = []
         self.score = 0
         self._i_view = i_view
-        self._key = NULL
+        self._key = 0
         self._keyboard_services = KeyboardService(self.bag, MOVE_AMOUNT)
         self._background = arcade.load_texture(BACKGROUND_IMG)
         self._object_creator = ObjectCreator(
@@ -99,7 +98,7 @@ class GameDirector(arcade.View):
         self._object_creator.check_off_screen()
         self.check_collisions()
         if self._key == arcade.key.ESCAPE:
-            self._key = NULL
+            self._key = 0
         if r.randint(1, 25) == 1:
             self._object_creator.create_object()
 
@@ -130,4 +129,4 @@ class GameDirector(arcade.View):
         self._key = key
 
     def on_key_release(self, key, key_modifiers):
-        self._key = NULL
+        self._key = 0
